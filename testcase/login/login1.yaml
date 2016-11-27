@@ -1,0 +1,17 @@
+---
+-
+  test_inherit: login
+-
+  test_name: 返回登陆页
+  test_id: 0001
+  test_action: entity_back
+  test_range: 2
+
+-
+  test_name: 验证启动页
+  test_id: 0002
+  test_control_type: id
+  test_action: assert
+  test_text: Button
+  test_control: test.joko.com.myapplication:id/button1
+  test_wait: 30

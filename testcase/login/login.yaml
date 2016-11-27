@@ -1,0 +1,41 @@
+---
+-
+  test_name: 点击跳过
+  test_id: 0001
+  test_control_type: id
+  test_action: click
+  test_control: test.joko.com.myapplication:id/button1
+-
+  test_name: 输入帐号名
+  test_id: 0002
+  test_control_type: id
+  test_action: send_keys
+  test_control: test.joko.com.myapplication:id/editText
+  test_text: 199999999
+-
+  test_name: 输入密码
+  test_id: 0003
+  test_control_type: id
+  test_action: send_keys
+  test_control: test.joko.com.myapplication:id/editText2
+  test_text: 9999
+
+-
+  test_name: 点击登录
+  test_id: 0004
+  test_control_type: xpath
+  test_action: click
+  test_control: //android.widget.Button[contains(@text,'确定')]
+
+-
+  test_name: 向上滑动页面
+  test_id: 0005
+  test_action: swipe_up
+  test_range: 2
+
+-
+  test_name: 向下滑动页面
+  test_id: 0005
+  test_action: swipe_down
+  test_range: 2
+

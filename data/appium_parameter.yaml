@@ -1,0 +1,9 @@
+---
+-
+ appPackage: test.joko.com.myapplication
+ appActivity: .welcome
+ appWaitActivity: .welcome
+ unicodeKeyboard: True
+ resetKeyboard: True
+ resetKeyboard: True
+ noReset: False
