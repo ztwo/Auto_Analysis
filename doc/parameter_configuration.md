@@ -1,20 +1,39 @@
 ## 执行的参数配置
 
 
-* 配置 data/test_info.ini
+* 配置 data/test_info.ini ,
 
 ```ini
 
 [test_package_name]
+# 应用包名
 package_name = com.x.x.x
-#（应用报名）
-
-
-[test_info]
-info = /Users/joko/Documents/Auto_Analysis/data/appium_parameter.yaml
 
 [test_install_path]
-path = 应用安装地址
+* 被测试应用地址
+path = /Users/joko/Auto_Analysis/data/app.apk
+
+[test_device]
+* device信息存放地址
+device = /Users/joko/Auto_Analysis/data/incidental/device_info.yaml
+
+[test_case]
+* 测试case存放地址
+case = /Users/joko/Auto_Analysis/testcase
+* 测试报告存放地址
+log_file = /Users/joko/Auto_Analysis/result
+* 错误图片展示地址
+error_img = /Users/joko/Auto_Analysis/data/incidental/error.png
+
+[minicap]
+* minicap地址:用于截图
+minicap_path = /Users/joko/Auto_Analysis/data/minicap/bin/{}/minicap
+minitouch_path = /Users/joko/Auto_Analysis/data/minicap/minitouch/{}/minitouch
+minicapso_path = /Users/joko/Auto_Analysis/data/minicap/shared/android-{}/{}/minicap.so
+
+[test_db]
+* 存放测试记录的db地址
+test_result = /Users/joko/Auto_Analysis/data/incidental/test.db
 
 ```
 

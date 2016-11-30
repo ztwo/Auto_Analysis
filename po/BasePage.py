@@ -69,16 +69,11 @@ class Base:
         获取屏幕分辨率
         :return: {u'width': 1080, u'height': 1920}
         """
-        a = 0
-        while a < 6:
-            try:
-                width = self.driver.get_window_size()['width']
-                height = self.driver.get_window_size()['height']
-                return width, height
-            except Exception as e:
-                a += 1
-                U.Logging.error(e)
-                U.Logging.error('appium failed to get resolution')
+
+        screen_size = self.driver.get_window_size()
+        width = screen_size['width']
+        height = screen_size['height']
+        return width, height
 
     def swipe_ratio(self, st, sy, ex, ey):
         """

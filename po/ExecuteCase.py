@@ -78,12 +78,12 @@ class start_case():
         try:
             self.dash_page.save_screenshot(screen_file)
         except Exception as e:
-            U.Logging.warn(
+            U.Logging.debug(
                 '__save_screen_file:err,The minicap has been replaced')
             import lib.ScreenShot
             s = lib.ScreenShot.minicap(
-                self.device, self.all_result_path + '/img/')
-            s.main(self.filename)
+                self.device)
+            s.main(screen_file)
 
         return screen_file
 

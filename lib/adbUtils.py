@@ -942,7 +942,7 @@ class ADB(object):
     def get_ps(self):
         """
 
-        :return:设备全部信息
+        :return:设备全部进程信息
         """
         t = self.shell("ps").stdout.readlines()
         return ''.join(t).strip()
@@ -957,5 +957,5 @@ class ADB(object):
 
 
 if __name__ == "__main__":
-    A = ADB('T7G0215A14000220')
+    A = ADB()
     print A.get_focused_package_and_activity()

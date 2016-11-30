@@ -9,22 +9,31 @@ __author__ = 'joko'
 import os
 import Utils as U
 import adbUtils
+import random
 
 
 class minicap():
-    def __init__(self, device, computer_path):
+    def __init__(self, device):
         self.adb = adbUtils.ADB(device)
         ini = U.ConfigIni()
+        print ini.get_ini(
+            'minicap', 'minicap_path').format(
+            self.adb.get_cpu_version())
         self.minicap_path = ini.get_ini(
             'minicap', 'minicap_path').format(
+            self.adb.get_cpu_version())
+        print ini.get_ini(
+            'minicap', 'minitouch_path').format(
             self.adb.get_cpu_version())
         self.minitouch_path = ini.get_ini(
             'minicap', 'minitouch_path').format(
             self.adb.get_cpu_version())
+        print ini.get_ini(
+            'minicap', 'minicapSO_path').format(
+            self.adb.get_sdk_version(), self.adb.get_cpu_version())
         self.minicapSO_path = ini.get_ini(
             'minicap', 'minicapSO_path').format(
             self.adb.get_sdk_version(), self.adb.get_cpu_version())
-        self.computer_path = computer_path
 
     def push_minicap(self):
         U.Logging.info('pushCpu_minicap:' + self.minicap_path)
@@ -55,7 +64,7 @@ class minicap():
             return width, height
         return width, height
 
-    def phone_screen(self, width_height, filename):
+    def phone_screen(self, width_height):
         """
         截图
         :param width_height: 宽高
@@ -64,27 +73,29 @@ class minicap():
         """
 
         U.Logging.info('phone_screen:%s' % width_height)
+        filename = str(random.randint(1,1000))
         self.adb.shell(
             "'LD_LIBRARY_PATH=/data/local/tmp /data/local/tmp/minicap -P {}/0 -s > /data/local/tmp/{}.png'".format(
                 width_height, filename))
         U.Logging.info('phone_screen:success')
+        return filename
 
     def pull_screen(self, filename, computer_path):
         self.adb.pull(
             '/data/local/tmp/{}.png'.format(filename),
-            '{}'.format(computer_path))
+            computer_path)
 
-    def main(self, filename):
+    def main(self,computer_path):
         if os.path.exists(self.minicapSO_path):
             width, height = self.check_minicap()
             width_height = '{}x{}@{}x{}'.format(width, height, width, height)
-            U.Logging.info('main:filename:%s' % filename)
+            # U.Logging.info('main:filename:%s' % filename)
 
             if 'None' not in width_height:
                 U.Logging.info('main:exist minicap')
-                self.phone_screen(width_height, filename)
+                filename = self.phone_screen(width_height)
                 U.sleep(0.3)
-                self.pull_screen(filename, self.computer_path)
+                self.pull_screen(filename, computer_path)
             else:
                 U.Logging.info('main:does not exist minicap')
                 self.push_minicap()
@@ -94,17 +105,15 @@ class minicap():
                 width, height = self.check_minicap()
                 width_height = '{}x{}@{}x{}'.format(
                     width, height, width, height)
-                self.phone_screen(width_height, filename)
+                filename = self.phone_screen(width_height)
                 U.sleep(0.3)
-                self.pull_screen(filename, self.computer_path)
+                self.pull_screen(filename, computer_path)
             self.adb.rm_minicap_jpg(filename)
         else:
             U.Logging.warn('not minicap found ,check the directory')
-            self.adb.screen_shot(self.computer_path)
+            self.adb.screen_shot(computer_path)
 
 
 if __name__ == '__main__':
-    a = minicap(
-        '0530dc6a',
-        '/Users/joko/Documents/Auto_Analysis/result/2016-11-10_17_12_2696/img/')
-    a.main('1')
+    a = minicap('BX903JC3WS')
+    a.main('/Users/joko/Documents/Auto_Analysis/result/2016-11-30_14_00_1521/img/2.png')

@@ -43,7 +43,11 @@ def get_html_tr(case_id, passing_state, img_path, per, device_log, filter_log):
 def get_html(log, device, app_info, test_status, result_path):
     """
 
-    :param log: 错误日志
+    :param log: 测试报告报表
+    :param device: device信息
+    :param app_info: 测试应用信息
+    :param test_status: 测试用例信息
+    :param result_path: 输出文件夹
     :return:
     """
     all_case, passed, failed = test_status

@@ -45,3 +45,5 @@
 * appium:appium_wiki文档
 
 * 控件查找:controls_operations文档
+
+* 如果想单线程运行,请运行:po.integration
