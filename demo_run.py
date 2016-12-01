@@ -12,7 +12,6 @@ main_view = os.path.split(os.path.realpath(sys.argv[0]))[0]
 main_view = main_view.replace('\\', '/')
 sys.path.append(main_view)
 import lib.Utils as U
-import public.CleanProcess
 
 
 def initialization_arrangement_case():
@@ -34,24 +33,5 @@ def initialization_arrangement_case():
 
 
 if __name__ == '__main__':
-    initialization_arrangement_case()
-    import public.GetDevice
-
-    public.GetDevice.set_device_yaml()
-
-    import po.integration
-    from multiprocessing import Pool
-
-
-    def case_sun(device):
-        a = po.integration.RunApp(device)
-        a.case_start()
-
-
-    device_list = po.integration.get_device_info()
-    pool = Pool(len(device_list))
-    pool.map(case_sun, device_list)
-    pool.close()
-    pool.join()
-    cp = public.CleanProcess.Cp()
-    cp.clean_process_all()
+    import run
+    run.run_device()
