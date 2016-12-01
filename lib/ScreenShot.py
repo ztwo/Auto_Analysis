@@ -16,21 +16,12 @@ class minicap():
     def __init__(self, device):
         self.adb = adbUtils.ADB(device)
         ini = U.ConfigIni()
-        print ini.get_ini(
-            'minicap', 'minicap_path').format(
-            self.adb.get_cpu_version())
         self.minicap_path = ini.get_ini(
             'minicap', 'minicap_path').format(
-            self.adb.get_cpu_version())
-        print ini.get_ini(
-            'minicap', 'minitouch_path').format(
             self.adb.get_cpu_version())
         self.minitouch_path = ini.get_ini(
             'minicap', 'minitouch_path').format(
             self.adb.get_cpu_version())
-        print ini.get_ini(
-            'minicap', 'minicapSO_path').format(
-            self.adb.get_sdk_version(), self.adb.get_cpu_version())
         self.minicapSO_path = ini.get_ini(
             'minicap', 'minicapSO_path').format(
             self.adb.get_sdk_version(), self.adb.get_cpu_version())

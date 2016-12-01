@@ -60,7 +60,7 @@ class colour:
             p = lambda x: cprint(x, '%s' % colour)
             return p(msg)
         except:
-            print msg
+            print (msg)
 
     @staticmethod
     def show_verbose(msg):
@@ -207,8 +207,5 @@ class Asql:
 
 if __name__ == '__main__':
     a = Asql()
-    # a.insert_per('login','sanxin','[1,2]','[1,2]',1,)
-    xing = a.select_per('login1', 'sanxing')
-    print xing
-
+    print (a.select_per('login1', 'sanxing'))
     a.close()
