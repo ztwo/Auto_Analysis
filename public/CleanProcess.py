@@ -12,11 +12,11 @@ import platform
 class Cp(object):
 
     def __darwin(self, port, device):
-        for line in U.cmd(
-            "lsof -i tcp:%s | grep node|awk '{print $2}'" %
-                str(port)).stdout.readlines():
-            U.cmd('kill -9 %s' % line.strip())
-            U.Logging.debug('CleanProcess:Darwin:kill appium')
+        # for line in U.cmd(
+        #     "lsof -i tcp:%s | grep node|awk '{print $2}'" %
+        #         str(port)).stdout.readlines():
+        #     U.cmd('kill -9 %s' % line.strip())
+        #     U.Logging.debug('CleanProcess:Darwin:kill appium')
         for line in U.cmd(
                 "ps -A | grep logcat | grep %s" % device).stdout.readlines():
             U.cmd('kill -9 %s' % line.strip())
@@ -24,11 +24,11 @@ class Cp(object):
 
     def __linux(self, port, device):
         # linux必须最高权限才可获取到端口
-        for line in U.cmd(
-            "lsof -i:%s |awk '{print $2}'" %
-                str(port)).stdout.readlines():
-            U.cmd('kill -9 %s' % line.strip())
-            U.Logging.debug('CleanProcess:linux:kill appium')
+        # for line in U.cmd(
+        #     "lsof -i:%s |awk '{print $2}'" %
+        #         str(port)).stdout.readlines():
+        #     U.cmd('kill -9 %s' % line.strip())
+        #     U.Logging.debug('CleanProcess:linux:kill appium')
         for line in U.cmd(
             "ps -ef | grep logcat | grep %s|awk '{print $2}'" %
                 device).stdout.readlines():

@@ -16,7 +16,7 @@ class Base:
         self.driver = appium_driver
 
     # 重新封装单个元素定位方法
-    def find_element(self, loc, wait = 15):
+    def find_element(self, loc, wait=15):
         try:
             WebDriverWait(
                 self.driver, wait).until(
@@ -67,7 +67,8 @@ class Base:
     def get_window_size(self):
         """
         获取屏幕分辨率
-        :return: {u'width': 1080, u'height': 1920}
+        {u'width': 1080, u'height': 1920}
+        :return: 1080,1920
         """
 
         screen_size = self.driver.get_window_size()
@@ -197,14 +198,22 @@ class Base:
         """
         return self.driver.current_activity
 
-    def send_key_event(self,arg):
+    def send_key_event(self, arg):
         """
         操作实体按键
         :return:
         """
-        event_list = {'entity_home':3,'entity_back':4,'entity_menu':82,'entity_volume_up':24,'entity_volume_down':25}
+        event_list = {'entity_home': 3, 'entity_back': 4, 'entity_menu': 82, 'entity_volume_up': 24,
+                      'entity_volume_down': 25}
         if arg in event_list:
             self.driver.keyevent(int(event_list[arg]))
+
+    def toggle_location_services(self):
+        """
+        开关定位服务
+        :return:
+        """
+        return self.driver.toggle_location_services()
 
 
 if __name__ == '__main__':

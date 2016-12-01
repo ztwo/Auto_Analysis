@@ -145,7 +145,10 @@ class RunApp(object):
                 self.__install_app()
 
                 self.analysis(yaml_name, yaml_path)
-                self.driver.quit()
+                try:
+                    self.driver.quit()
+                except Exception as e:
+                    U.Logging.warn('driver quit Error %s'%e)
                 self.clear_process()
 
 
