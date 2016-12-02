@@ -33,5 +33,6 @@ def initialization_arrangement_case():
 
 
 if __name__ == '__main__':
+    initialization_arrangement_case()
     import run
     run.run_device()
