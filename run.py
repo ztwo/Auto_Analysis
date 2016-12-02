@@ -33,6 +33,7 @@ def run_device():
     for device in device_list:
         test_run = r(device)
         test_run.start()
+    test_run.join()
 
 
 if __name__ == '__main__':
