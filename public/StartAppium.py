@@ -24,8 +24,14 @@ class Sp:
 
         aport = random.randint(4700, 4900)
         bpport = random.randint(4700, 4900)
-        U.cmd("appium -p %s -bp %s -U %s" %
+        appium = U.cmd("appium -p %s -bp %s -U %s" %
               (aport, bpport, self.device))  # 启动appium
+        while True:
+            appium_line = appium.stdout.readline().strip()
+            U.Logging.debug(appium_line)
+            if 'listener started' in appium_line:
+                break
+
         U.Logging.debug(
             'start appium :p %s bp %s device:%s' %
             (aport, bpport, self.device))
