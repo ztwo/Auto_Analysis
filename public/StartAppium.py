@@ -7,12 +7,32 @@ __author__ = 'joko'
 """
 import lib.Utils as U
 import random
+import platform
 
 
 class Sp:
-
     def __init__(self, device):
         self.device = device
+
+    def __start_driver(self, aport, bpport):
+        """
+        清理logcat与appium所有进程
+        :return:
+        """
+        if platform.system() == 'Windows':
+            # 在win10启动appium有bug,暂时处理方案
+            import subprocess
+            subprocess.Popen("appium -p %s -bp %s -U %s" %
+                             (aport, bpport, self.device), shell=True)
+
+        else:
+            appium = U.cmd("appium -p %s -bp %s -U %s" %
+                           (aport, bpport, self.device))  # 启动appium
+            while True:
+                appium_line = appium.stdout.readline().strip()
+                U.Logging.debug(appium_line)
+                if 'listener started' in appium_line:
+                    break
 
     def start_appium(self):
         """
@@ -24,13 +44,7 @@ class Sp:
 
         aport = random.randint(4700, 4900)
         bpport = random.randint(4700, 4900)
-        appium = U.cmd("appium -p %s -bp %s -U %s" %
-              (aport, bpport, self.device))  # 启动appium
-        while True:
-            appium_line = appium.stdout.readline().strip()
-            U.Logging.debug(appium_line)
-            if 'listener started' in appium_line:
-                break
+        self.__start_driver(aport, bpport)
 
         U.Logging.debug(
             'start appium :p %s bp %s device:%s' %
