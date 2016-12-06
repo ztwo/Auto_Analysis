@@ -13,6 +13,8 @@ sys.path.append(main_view)
 import public.CleanProcess
 import public.GetDevice
 import po.integration
+import public.CheckEnvironment
+public.CheckEnvironment.check_environment()
 
 device_list = po.integration.get_device_info()
 import threading

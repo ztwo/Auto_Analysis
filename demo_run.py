@@ -12,6 +12,7 @@ main_view = os.path.split(os.path.realpath(sys.argv[0]))[0]
 main_view = main_view.replace('\\', '/')
 sys.path.append(main_view)
 import lib.Utils as U
+import public.CheckEnvironment
 
 
 def initialization_arrangement_case():
@@ -33,6 +34,7 @@ def initialization_arrangement_case():
 
 
 if __name__ == '__main__':
+    public.CheckEnvironment.check_environment()
     initialization_arrangement_case()
     import run
     run.run_device()
