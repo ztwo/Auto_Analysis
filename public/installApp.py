@@ -105,7 +105,8 @@ class Ia:
             install_num = 0
             while install_num < 4:
                 install_info = self.adb.install_app(app_file_path).stdout.readlines()
-                if 'Success' in install_info[-1].strip():
+                U.Logging.success('install_info:%s'%install_info)
+                if self.adb.is_install(package_name):
                     self.queue.put(1)
                     break
                 else:

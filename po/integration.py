@@ -106,7 +106,7 @@ class RunApp(object):
                 U.Logging.error(
                     'Try restarting the appium :{},Trying the {} frequency'.format(self.device, number_of_starts))
                 U.sleep(5)
-        if number_of_starts == 5:
+        if number_of_starts > 5:
             U.Logging.error('Can not start appium, the program exits')
             exit()
 
