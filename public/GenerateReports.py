@@ -63,7 +63,7 @@ class Gr:
         """
 
         return 'device_name:' + self.adb.get_device_name(), 'disk:' + self.adb.get_disk(), \
-               'wifi_name:' + self.adb.wifi_name(), 'system_version:' + self.adb.get_android_version(), \
+               'wifi_name:' + str(self.adb.wifi_name()), 'system_version:' + self.adb.get_android_version(), \
                'resolution:' + str(self.adb.get_screen_resolution())
 
     def __app_info(self):
