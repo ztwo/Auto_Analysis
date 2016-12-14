@@ -62,8 +62,8 @@ class Gr:
         :return: 设备名,磁盘状态,wifi名称
         """
 
-        return 'device_name:' + self.adb.get_device_name(), 'disk:' + self.adb.get_disk(), \
-               'wifi_name:' + str(self.adb.wifi_name()), 'system_version:' + self.adb.get_android_version(), \
+        return 'device_name:' + str(self.adb.get_device_name()), 'disk:' + str(self.adb.get_disk()), \
+               'wifi_name:' + str(self.adb.wifi_name()), 'system_version:' + str(self.adb.get_android_version()), \
                'resolution:' + str(self.adb.get_screen_resolution())
 
     def __app_info(self):
