@@ -200,11 +200,12 @@ class Base:
 
     def send_key_event(self, arg):
         """
+        参考文献：http://blog.csdn.net/jlminghui/article/details/39268419
         操作实体按键
         :return:
         """
         event_list = {'entity_home': 3, 'entity_back': 4, 'entity_menu': 82, 'entity_volume_up': 24,
-                      'entity_volume_down': 25}
+                      'entity_volume_down': 25, "entity_enter": 66}
         if arg in event_list:
             self.driver.keyevent(int(event_list[arg]))
 
