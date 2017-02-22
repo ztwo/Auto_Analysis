@@ -27,15 +27,15 @@ class minicap():
             self.adb.get_sdk_version(), self.adb.get_cpu_version())
 
     def push_minicap(self):
-        U.Logging.info('pushCpu_minicap:' + self.minicap_path)
+        U.Logging.info('push_Cpu_minicap:' + self.minicap_path)
         self.adb.adb('push %s /data/local/tmp' % self.minicap_path)
 
     def push_minicaptouch(self):
-        U.Logging.info('pushtouch_minitouch:' + self.minitouch_path)
+        U.Logging.info('push_touch_minitouch:' + self.minitouch_path)
         self.adb.shell('chmod 777 /data/local/tmp/minitouch')
 
     def push_minicapSO(self):
-        U.Logging.info('pushsdk_minicap.so:' + self.minicapSO_path)
+        U.Logging.info('push_sdk_minicap.so:' + self.minicapSO_path)
         self.adb.adb('push %s /data/local/tmp' % self.minicapSO_path)
         self.adb.shell('chmod 777 /data/local/tmp/minicap')
 
@@ -45,7 +45,7 @@ class minicap():
         for i in self.adb.shell(
                 "'LD_LIBRARY_PATH=/data/local/tmp /data/local/tmp/minicap -i'").stdout.readlines():
             if 'secure' in i and 'true' in i:
-                U.Logging.info('pushsdk:success')
+                U.Logging.info('push_minicap_sdk:success')
             elif 'width' in i:
                 width = i.strip().split(':')[1].strip().split(',')[0]
             elif 'height' in i:
