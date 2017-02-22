@@ -10,12 +10,15 @@ import public.GetDevice
 
 
 def check_environment():
-    appium = U.cmd("appium -v")
-    if '1.' not in appium.stdout.readlines()[0].strip():
+    appium = U.cmd("appium -v").stdout.readlines()[0].strip()
+    if '1.' not in appium:
         U.Logging.error('appium not in computer')
         exit()
     else:
-        U.Logging.info('appium version')
+        U.Logging.info('appium version {}'.format(appium))
     if not public.GetDevice.get_device():
         U.Logging.error('the computer is not connected to any devices')
         exit()
+
+if __name__ == '__main__':
+    check_environment()
