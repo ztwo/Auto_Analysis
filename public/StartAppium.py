@@ -31,7 +31,8 @@ class Sp:
             while True:
                 appium_line = appium.stdout.readline().strip()
                 U.Logging.debug(appium_line)
-                if 'listener started' in appium_line:
+                U.sleep(1)
+                if 'listener started' in appium_line or 'Error: listen' in appium_line:
                     break
 
     def start_appium(self):
