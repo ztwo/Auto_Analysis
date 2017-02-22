@@ -132,7 +132,7 @@ class ADB(object):
         注：杀死系统应用进程需要root权限
         """
         if self.shell("kill %s" %
-                      str(pid)).stdout.read().split(": ")[-1] == "":
+                              str(pid)).stdout.read().split(": ")[-1] == "":
             return "kill success"
         else:
             return self.shell("kill %s" %
@@ -193,8 +193,8 @@ class ADB(object):
         """
         services_list = []
         for line in self.shell(
-            'dumpsys activity services %s' %
-                page_name).stdout.readlines():
+                        'dumpsys activity services %s' %
+                        page_name).stdout.readlines():
             if line.strip().startswith('intent'):
                 service_name = line.strip().split('=')[-1].split('}')[0]
                 if service_name not in services_list:
@@ -289,8 +289,8 @@ class ADB(object):
         """
         matApp = []
         for packages in self.shell(
-            "pm list packages %s" %
-                keyword).stdout.readlines():
+                        "pm list packages %s" %
+                        keyword).stdout.readlines():
             matApp.append(packages.split(":")[-1].splitlines()[0])
 
         return matApp
@@ -383,7 +383,7 @@ class ADB(object):
         args:
         - packageName -:应用包名，非apk名
         """
-        self.adb("uninstall %s" % packageName)
+        return self.adb("uninstall %s" % packageName)
 
     def clear_app_data(self, packageName):
         """
@@ -391,8 +391,8 @@ class ADB(object):
         usage: clearAppData("com.android.contacts")
         """
         if "Success" in self.shell(
-            "pm clear %s" %
-                packageName).stdout.read().splitlines():
+                        "pm clear %s" %
+                        packageName).stdout.read().splitlines():
             return "clear user data success "
         else:
             return "make sure package exist"
@@ -405,6 +405,24 @@ class ADB(object):
         component = self.get_focused_package_and_activity()
         self.clear_app_data(packageName)
         self.start_activity(component)
+
+    def get_app_install_path(self, path_name):
+        """
+        获取第三方应用安装地址
+        :return:
+        """
+        t = self.shell("pm path %s" % path_name).stdout.readlines()
+        return ''.join(t).strip().split(':')[1]
+
+    def pull_install_app(self, save_path):
+        """
+        获取当前Android设备第三方应用包，并且pull到本地
+        :param save_path: 存放路径
+        :return:
+        """
+        for app_package_name in self.get_third_app_list():
+            install_app_path = self.get_app_install_path(app_package_name)
+            self.pull(install_app_path, save_path + '/' + app_package_name + '.apk')
 
     def start_activity(self, component):
         """
@@ -662,8 +680,8 @@ class ADB(object):
         查询当前屏幕应用版本
         """
         for package in self.shell(
-            'dumpsys package %s' %
-                self.get_current_package_name()).stdout.readlines():
+                        'dumpsys package %s' %
+                        self.get_current_package_name()).stdout.readlines():
             if 'versionName' in package:
                 return package.split('=', 2)[1].strip()
 
@@ -674,8 +692,8 @@ class ADB(object):
         :return: 包名,versionName
         """
         for package in self.shell(
-            'dumpsys package %s' %
-                package).stdout.readlines():
+                        'dumpsys package %s' %
+                        package).stdout.readlines():
             if 'versionName' in package:
                 return package.split('=', 2)[1].strip()
 
@@ -684,8 +702,8 @@ class ADB(object):
         查询当前屏幕应用versionCode
         """
         for package in self.shell(
-            'dumpsys package %s' %
-                self.get_current_package_name()).stdout.readlines():
+                        'dumpsys package %s' %
+                        self.get_current_package_name()).stdout.readlines():
             if 'versionCode' in package:
                 return package.split('=', 2)[1].split(' ', 2)[0]
 
@@ -694,8 +712,8 @@ class ADB(object):
         查询当前屏幕应用安装时间
         """
         for package in self.shell(
-            'dumpsys package %s' %
-                self.get_current_package_name()).stdout.readlines():
+                        'dumpsys package %s' %
+                        self.get_current_package_name()).stdout.readlines():
             if 'firstInstallTime' in package:
                 return package.split('=', 2)[1].strip()
 
@@ -704,8 +722,8 @@ class ADB(object):
         查询当前屏幕应用安装更新时间
         """
         for package in self.shell(
-            'dumpsys package %s' %
-                self.get_current_package_name()).stdout.readlines():
+                        'dumpsys package %s' %
+                        self.get_current_package_name()).stdout.readlines():
             if 'lastUpdateTime' in package:
                 return package.split('=', 2)[1].strip()
 
@@ -721,6 +739,16 @@ class ADB(object):
                 else:
                     return wifi_name[0].strip()
 
+    def get_network_state(self):
+        """
+        设备是否连上互联网
+        :return:
+        """
+        if 'unknown' in self.shell('ping -w 1 www.baidu.com').stdout.readlines()[0]:
+            return False
+        else:
+            return True
+
     def get_cpu(self, package_name):
         """
         获取当前cpu百分比
@@ -731,10 +759,7 @@ class ADB(object):
         while True:
             r = p.stdout.readline().strip().decode('utf-8')
             if r.endswith(package_name):
-                lst = []
-                for i in r.split(' '):
-                    if i:
-                        lst.append(i)
+                lst = [cpu for cpu in r.split(' ') if cpu]
                 return int(lst[2].split('%', 1)[0])
 
     def __mem_pss(self, package_name):
@@ -747,10 +772,7 @@ class ADB(object):
         while True:
             r = p.stdout.readline().strip().decode('utf-8')
             if r.endswith(package_name):
-                lst = []
-                for i in r.split(' '):
-                    if i:
-                        lst.append(i)
+                lst = [mem for mem in r.split(' ') if mem]
                 return int(lst[6].split('K')[0])
 
     def __mem_mem_total(self):
@@ -758,10 +780,7 @@ class ADB(object):
         while True:
             r = p.stdout.readline().strip().decode('utf-8')
             if r and 'MemTotal' in r:
-                lst = []
-                for i in r.split(' '):
-                    if i:
-                        lst.append(i)
+                lst = [MemTotal for MemTotal in r.split(' ') if MemTotal]
                 return int(lst[1])
 
     def get_mem(self, package_name):
@@ -789,7 +808,7 @@ class ADB(object):
         """
         self.shell('rm -r /mnt/sdcard/bigfile')
 
-    def backup_apk(self, path):
+    def backup_apk(self, package_name, path):
         """
         备份应用与数据
         - all 备份所有
@@ -798,8 +817,8 @@ class ADB(object):
         -shared 备份sd卡
         """
         self.adb(
-            'backup -apk com.huivo.swift.teacher -f %s/mybackup.ab' %
-            path)
+            'backup -apk %s -f %s/mybackup.ab' %
+            (package_name, path))
 
     def restore_apk(self, path):
         """
