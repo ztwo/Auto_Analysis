@@ -16,7 +16,6 @@ import po.integration
 import public.CheckEnvironment
 public.CheckEnvironment.check_environment()
 
-device_list = po.integration.get_device_info()
 import threading
 
 
@@ -32,6 +31,7 @@ class r(threading.Thread):
 
 def run_device():
     public.GetDevice.set_device_yaml()
+    device_list = po.integration.get_device_info()
     for device in device_list:
         test_run = r(device)
         test_run.start()
