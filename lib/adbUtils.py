@@ -974,6 +974,21 @@ class ADB(object):
         t = self.shell("top -n 1 -d 0.5").stdout.readlines()
         return ''.join(t).strip()
 
+    def get_phone_ime(self):
+        """
+
+        :return:获取设备已安装的输入法包名
+        """
+        ime_list = [ime.strip() for ime in self.shell("ime list -s").stdout.readlines()]
+        return ime_list
+
+    def set_phone_ime(self, arg):
+        """
+
+        :return: 更改手机输入法
+        """
+        self.shell("ime set %s" % arg)
+
 
 if __name__ == "__main__":
     A = ADB()
