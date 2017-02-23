@@ -27,7 +27,7 @@
 | send_keys   | 发送文本 | send_keys                                | test_control_type，test_control，test_text | /         |
 | swipe       | 滑动   | swipe_left,swipe_right,swipe_up,swipe_down | /                                        | /         |
 | assert      | 断言   | assert                                   | test_control_type，test_control，test_text | test_wait |
-| entity      | 实体按键 | entity_home，entity_back，entity_menu，entity_volume_up，entity_volume_down | /                                        | /         |
+| entity      | 实体按键 | entity_home，entity_back，entity_menu，entity_volume_up，entity_volume_down,entity_enter | /                                        | /         |
 
 ## 完整用例范例,用例名:login
 
