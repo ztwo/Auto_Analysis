@@ -244,7 +244,7 @@ class ADB(object):
         """
         pattern = re.compile(r"\d+")
         out = self.shell(
-            "dumpsys display | %s PhysicalDisplayInfo" %
+            "dumpsys display | %s DisplayDeviceInfo" %
             find_util).stdout.read()
         display = pattern.findall(out)
 
