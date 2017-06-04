@@ -23,7 +23,7 @@ def sleep(s):
 
 
 def cmd(cmd):
-    return subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    return subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE,bufsize=1,close_fds=True)
 
 
 class ConfigIni():
